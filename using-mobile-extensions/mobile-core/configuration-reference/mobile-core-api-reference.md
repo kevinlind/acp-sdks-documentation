@@ -138,13 +138,13 @@ ACPCore.trackState("state name", data: ["key": "value"])
 
 ## Logging
 
-The logging APIs allow log messages to be tagged and filtered with a the Mobile SDK log messages. It allows a separation between Mobile SDK messages and application messages in the device log files. 
+The logging APIs allow log messages to be tagged and filtered with the Mobile SDK log messages. It allows a separation between Mobile SDK messages and application messages in the device log files. 
 
 As an application developer, use the `setLogLevel` API to filter the log messages coming from the Mobile SDK.
 
 As a Mobile SDK extension developer, use the `log` APIs to include extension log messages with Mobile SDK core log messages.
 
-The Mobile SDK logging modes in order of verbosity from least to most is `ERROR`, `WARNING`, `DEBUG`, and `TRACE`.
+The Mobile SDK logging modes in order of verbosity, from least to most, are `ERROR`, `WARNING`, `DEBUG`, and `TRACE`.
 
 
 
@@ -178,7 +178,15 @@ MobileCore.setLogLevel(com.adobe.marketing.mobile.LoggingMode.VERBOSE);
 
 #### Syntax
 
+```objective-c
++ (void) setLogLevel: (ACPMobileLogLevel) logLevel;
+```
+
 #### Example
+
+```objective-c
+[ACPCore setLogLevel: ACPMobileLogLevelVerbose];
+```
 
 {% endtab %}
 
@@ -190,7 +198,15 @@ MobileCore.setLogLevel(com.adobe.marketing.mobile.LoggingMode.VERBOSE);
 
 #### Syntax
 
+```swift
++ (void) setLogLevel: (ACPMobileLogLevel) logLevel;
+```
+
 #### Example
+
+```swift
+ACPCore.setLogLevel(ACPMobileLogLevel.verbose);
+```
 
 {% endtab %}
 
@@ -228,7 +244,15 @@ LoggingMode mode = MobileCore.getLogLevel();
 
 #### Syntax
 
+```objective-c
++ (ACPMobileLogLevel) logLevel;
+```
+
 #### Example
+
+```
+var logLevel:ACPMobileLogLevel = [ACPCore logLevel];
+```
 
 {% endtab %}
 
@@ -240,7 +264,15 @@ LoggingMode mode = MobileCore.getLogLevel();
 
 #### Syntax
 
+```swift
++ (ACPMobileLogLevel) logLevel;
+```
+
 #### Example
+
+```swift
+let logLevel:ACPMobileLogLevel = ACPCore.logLevel();
+```
 
 {% endtab %}
 
@@ -261,7 +293,13 @@ The `MobileCore` logging APIs use the `android.util.Log` APIs to log message to 
 - `MobileCore.logWarning` calls `android.util.Log.w`
 - `MobileCore.logError` calls `android.util.Log.e`
 
-### log
+### logTrace
+
+### logDebug
+
+### logWarning
+
+### logError
 
 #### Syntax
 
@@ -289,27 +327,13 @@ MobileCore.logDebug("MyActivity", "Debug message.");
 #### Syntax
 
 ```objective-c
-+ (void) logTrace: (nonnull NSString*) source format: (nonnull NSString*) format, ...;
-
-+ (void) logTrace: (nonnull NSString*) source format: (nonnull NSString*) format args: (va_list) args;
-
-+ (void) logDebug: (nonnull NSString*) source format: (nonnull NSString*) format, ...;
-
-+ (void) logDebug: (nonnull NSString*) source format: (nonnull NSString*) format args: (va_list) args;
-
-+ (void) logWarning: (nonnull NSString*) source format: (nonnull NSString*) format, ...;
-
-+ (void) logWarning: (nonnull NSString*) source format: (nonnull NSString*) format args: (va_list) args;
-
-+ (void) logError: (nonnull NSString*) source format: (nonnull NSString*) format, ...;
-
-+ (void) logError: (nonnull NSString*) source format: (nonnull NSString*) format args: (va_list) args;
++ (void) log: (ACPMobileLogLevel) logLevel tag: (nonnull NSString*) tag message: (nonnull NSString*) message;
 ```
 
 #### Example
 
 ```objective-c
-[ACPCore logTrace:@"exampleTag", format: @"formatted %@ number %d printed from function: %@", args: getVaList:@{@"text", 2, #function}];
+[ACPCore log: ACPMobileLogLevelDebug, tag:@"source", message:@"debug message"];
 ```
 
 {% endtab %}
@@ -323,27 +347,13 @@ MobileCore.logDebug("MyActivity", "Debug message.");
 #### Syntax
 
 ```swift
-+ (void) logTrace: (nonnull NSString*) source format: (nonnull NSString*) format, ...;
-
-+ (void) logTrace: (nonnull NSString*) source format: (nonnull NSString*) format args: (va_list) args;
-
-+ (void) logDebug: (nonnull NSString*) source format: (nonnull NSString*) format, ...;
-
-+ (void) logDebug: (nonnull NSString*) source format: (nonnull NSString*) format args: (va_list) args;
-
-+ (void) logWarning: (nonnull NSString*) source format: (nonnull NSString*) format, ...;
-
-+ (void) logWarning: (nonnull NSString*) source format: (nonnull NSString*) format args: (va_list) args;
-
-+ (void) logError: (nonnull NSString*) source format: (nonnull NSString*) format, ...;
-
-+ (void) logError: (nonnull NSString*) source format: (nonnull NSString*) format args: (va_list) args;
++ (void) log: (ACPMobileLogLevel) logLevel tag: (nonnull NSString*) tag message: (nonnull NSString*) message;
 ```
 
 #### Example
 
 ```swift
-ACPCore.logTrace("exampleTag", format: "swift formatted %@ number %d printed from function: %@", args: getVaList(["text", 2, #function]));
+ACPCore.log(ACPMobileLogLevel.debug, "source", "debug message");
 ```
 
 {% endtab %}
